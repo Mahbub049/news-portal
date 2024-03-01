@@ -62,7 +62,7 @@
       <hr class="border my-8" />
       <div
         id="categoryContainer"
-        class="flex justify-around text-[#858585] roboto text-lg mb-8"
+        class="flex justify-around roboto text-lg mb-8"
       >
         <!-- <button class="px-2 py-1 rounded-md">Home</button>
             <button class="px-2 py-1 rounded-md">Home</button>
@@ -78,7 +78,9 @@
     <main class="container mx-auto roboto">
       <section class="mb-10">
         <div class="px-[18px] py-5 text-lg">
-          <h1>4 items found for category Entertainment</h1>
+          <h1>
+            <span id="totalItems"></span> items found for category Entertainment
+          </h1>
         </div>
       </section>
       <section class="flex justify-between mb-14">
@@ -92,7 +94,10 @@
           </select>
         </div>
         <div class="text-lg">
-          <button class="p-[10px] bg-[#5D5FEF] text-white rounded-md">
+          <button
+            id="todaysPick"
+            class="p-[10px] bg-[#5D5FEF] text-white rounded-md"
+          >
             Today's Pick
           </button>
           <button
