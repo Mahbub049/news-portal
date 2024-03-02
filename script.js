@@ -2,9 +2,23 @@ const categoryContainer = document.getElementById('categoryContainer');
 const showNews = document.getElementById('showNews');
 const totalItems = document.getElementById('totalItems');
 const todaysPick = document.getElementById('todaysPick');
+const trending = document.getElementById('trending');
 // const btnCategory = document.getElementById('category');
 let totalNews;
 let selectedCategory = '08';
+let todaysPickClicked = false;
+let trendingClicked = false;
+
+// Add an event listener to the "Today's Pick" button
+todaysPick.addEventListener('click', () => {
+    todaysPickClicked = true;
+    showNewsData(selectedCategory, todaysPickClicked, trendingClicked);
+});
+
+trending.addEventListener('click', () => {
+    trendingClicked = true;
+    showNewsData(selectedCategory, todaysPickClicked, trendingClicked);
+});
 
 const dataLoad = async() => {
     const response = await fetch('https://openapi.programming-hero.com/api/news/categories');
@@ -33,16 +47,23 @@ const showByCategory = (data) =>{
     });
 }
 
-const showNewsData = async(id) => {
+const showNewsData = async(id, todaysPickClicked, trendingClicked) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/news/category/${id}`);
     const data = await response.json();
     const news = data.data;
-    showNewsByID(news);
-    todaysPick.addEventListener('click', ()=>{
-        if(news.others_info.is_todays_pick){
-            
-        }
-    })
+    selectedCategory = id;
+    if (todaysPickClicked) {
+        const todaysPickNews = news.filter(item => item.others_info.is_todays_pick);
+        showNewsByID(todaysPickNews);
+    }
+    else if(trendingClicked){
+        const trendingNews = news.filter(item => item.others_info.is_trending);
+        console.log(trendingNews);
+        showNewsByID(trendingNews);
+    }
+    else {
+        showNewsByID(news);
+    }
 }
 
 const showNewsByID = (data) =>{
@@ -103,4 +124,4 @@ const showNewsByID = (data) =>{
 }
 
 dataLoad();
-showNewsData(selectedCategory); 
+showNewsData(selectedCategory, todaysPickClicked, trendingClicked); 
